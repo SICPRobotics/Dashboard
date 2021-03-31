@@ -1,5 +1,5 @@
 import React from "react";
-import { selected, tab } from "./styles";
+import { selectedTab, tab } from "./styles";
 
 interface Props {
     onClick: () => void
@@ -7,5 +7,5 @@ interface Props {
 }
 
 export const Tab = (props: React.PropsWithChildren<Props>) => {
-    return <span style={{ ...tab, ...(props.selected ? selected : {}) }} onClick={props.onClick}>{props.children}</span>
+    return <span style={{ ...tab, ...(props.selected ? selectedTab : {}) }} onClick={props.onClick}>{props.children}</span>
 }

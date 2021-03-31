@@ -7,7 +7,7 @@ const mainElement = document.createElement('div')
 mainElement.setAttribute('id', 'root')
 document.body.appendChild(mainElement);
 
-
+mainElement.style.height = '100%';
 
 
 const App = () => {

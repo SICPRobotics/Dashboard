@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
-import { pi } from "../main";
-import { Status } from "../Status";
+import { pi, robot } from "../main";
+import { RobotStatus, VisionStatus } from "../Status";
 
-export function useStatus() {
-    const [status, setStatus] = useState<Status | null>(null);
+export function useVisionStatus() {
+    const [status, setStatus] = useState<VisionStatus | null>(null);
 
     useEffect(() => pi.onUpdate(setStatus));
+
+    return status;
+}
+
+export function useRobotStatus() {
+    const [status, setStatus] = useState<RobotStatus | null>(null);
+
+    useEffect(() => robot.onUpdate(setStatus));
 
     return status;
 }

@@ -10,8 +10,12 @@ export interface VisionRect {
     height: number
 }
 
-export interface Status {
+export interface VisionStatus {
     targetFound: boolean;
     target?: Point;
     bbox?: VisionRect
+}
+
+export interface RobotStatus {
+    
 }

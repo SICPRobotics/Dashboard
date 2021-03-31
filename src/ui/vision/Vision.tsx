@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from "react"
-import { useStatus } from "../../hooks/useStatus"
+import { useVisionStatus } from "../../hooks/useStatus"
+import { write } from "../../write";
 
 export const Vision = () => {
-    const status = useStatus();
+    const status = useVisionStatus();
 
     const ref = useRef<HTMLCanvasElement>(null);
 
@@ -25,7 +26,7 @@ export const Vision = () => {
             ctx.strokeRect(status.bbox.x, status.bbox.y, status.bbox.width, status.bbox.height);
         }
 
-        const midX = 160;
+        /*const midX = 160;
         const midY = 90;
         const thiccness = 3;
 
@@ -53,10 +54,20 @@ export const Vision = () => {
         ctx.beginPath();
         ctx.moveTo(midX, midY - 5);
         ctx.lineTo(midX, midY + 5);
-        ctx.stroke();
+        ctx.stroke();*/
 
         
-    })
+    });
+
+    useEffect(() => {
+        ref.current!.addEventListener('mousedown', (e) => {
+            const rect = (e.target! as HTMLCanvasElement).getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            write(`${x}, ${y}`);
+        })
+    }, []);
 
     return <div>
         <canvas ref={ref} width={400} height={300} style={{

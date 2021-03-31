@@ -1,16 +1,19 @@
-import { Status } from "./Status";
+import { VisionStatus } from "./Status";
 
-export class Pi {
-    socket: WebSocket;
-    private listeners: ((status: Status) => void)[];
-    status: Status | null;
+export class SocketManager {
+    socket!: WebSocket;
+    private listeners: ((status: VisionStatus) => void)[];
+    status: VisionStatus | null;
 
-    constructor() {
+    constructor(public address: string) {
         this.listeners = [];
         this.status = null;
 
-        this.socket = new WebSocket("ws://wpilibpi.local:5800");
-        //this.socket.onopen = () => this.socket.send('{"test":"Hello world!"}');
+        this.start();
+    }
+
+    start() {
+        this.socket = new WebSocket(this.address);
         this.socket.onerror = console.log;
         this.socket.onmessage = (event) => {
             const status = JSON.parse(event.data).value;
@@ -21,10 +24,10 @@ export class Pi {
                 listener(status);
             }
         }
-        this.socket.onclose = () => console.log('Closed')
+        this.socket.onclose = () => setTimeout(() => this.start(), 1000);
     }
 
-    onUpdate(fn: (status: Status | null) => void) {
+    onUpdate(fn: (status: VisionStatus | null) => void) {
         this.listeners.push(fn);
 
         fn(this.status);
