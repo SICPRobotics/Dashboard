@@ -70,7 +70,7 @@ export const Vision = () => {
     }, []);
 
     return <div>
-        <canvas ref={ref} width={400} height={300} style={{
+        <canvas ref={ref} width={320} height={240} style={{
             background: 'url(http://10.58.22.72/mjpg/video.mjpg)',
         }} />
         { JSON.stringify(status, null, 4) }
