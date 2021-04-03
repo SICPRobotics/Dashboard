@@ -8,7 +8,7 @@ interface Props {
 export const StatusIndicator = (props: React.PropsWithChildren<Props>) => <div style={{
     backgroundColor: props.color,
     padding: 5,
-    flexGrow: 1,
+    flex: 1,
     color: props.textColor
 }}>
     {props.children}
