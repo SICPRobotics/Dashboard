@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { pi } from "../main";
+import { ntClient, pi } from "../main";
 import { RobotStatus, VisionStatus } from "../Status";
 
 export function useVisionStatus() {
@@ -13,7 +13,7 @@ export function useVisionStatus() {
 export function useRobotStatus() {
     const [status, setStatus] = useState<RobotStatus | null>(null);
 
-    //useEffect(() => robot.onUpdate(setStatus));
+    useEffect(() => ntClient.onUpdate(setStatus));
 
     return status;
 }
