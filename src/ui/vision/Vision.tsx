@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from "react"
-import { useVisionStatus } from "../../hooks/useStatus"
+import { useRobotStatus, useVisionStatus } from "../../hooks/useStatus"
 import { write } from "../../write";
 
 export const Vision = () => {
     const status = useVisionStatus();
+    const robotStatus = useRobotStatus();
 
     const ref = useRef<HTMLCanvasElement>(null);
 
@@ -74,5 +75,6 @@ export const Vision = () => {
             background: 'url(http://10.58.22.72/mjpg/video.mjpg)',
         }} />
         { JSON.stringify(status, null, 4) }
+        <h1>Hood: {robotStatus ? (robotStatus as any)['/SmartDashboard/Hood Position']?.value : 'not connected'}</h1>
     </div>
 }
