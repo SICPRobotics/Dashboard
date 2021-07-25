@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react"
 import { useRobotStatus, useVisionStatus } from "../../hooks/useStatus"
 import { write } from "../../write";
+import { theme } from "../styles";
 
 export const Vision = () => {
     const status = useVisionStatus();
@@ -16,8 +17,6 @@ export const Vision = () => {
         ctx.lineJoin = 'round';
 
         if (status?.bbox) {
-            
-
             ctx.strokeStyle = 'white';
             ctx.lineWidth = 6;
             ctx.strokeRect(status.bbox.x, status.bbox.y, status.bbox.width, status.bbox.height);
@@ -75,6 +74,11 @@ export const Vision = () => {
             background: 'url(http://10.58.22.72/mjpg/video.mjpg)',
         }} />
         { JSON.stringify(status, null, 4) }
-        <h1>Hood: {robotStatus ? (robotStatus as any)['/SmartDashboard/Hood Position']?.value : 'not connected'}</h1>
+        <h1>Hood: {robotStatus ? robotStatus : 'not connected'}</h1>
+        <h1>Flywheel: <span style={{
+            color: robotStatus?.flywheel?.spinning ? theme.darkGreen : theme.body
+        }}>
+            {robotStatus?.flywheel?.spinning ? 'SPINNING' : 'off'}
+        </span></h1>
     </div>
 }

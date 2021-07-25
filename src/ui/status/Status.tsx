@@ -7,17 +7,16 @@ export const Status = () => {
     const vision = useVisionStatus();
     const piConn = vision ? (vision.targetFound ? 'ok' : 'noTarget') : 'noConnection'
     const robot = useRobotStatus();
-    const robotConn = robot ? 'ok' : 'noConnection'
-
+    const robotConn = robot ? 'ok' : 'noConnection';
 
     return <div style={{
         display: 'flex'
     }}>
-        <StatusIndicator color={{
+        <StatusIndicator color={robot?.nt.error ? theme.red : {
                 ok: theme.green,
                 noConnection: theme.red
             }[robotConn]}>
-            📻 Robot - {{
+            📻 Robot - {robot?.nt.error ?? {
                 ok: 'OK',
                 noConnection: 'No connection'
             }[robotConn]}

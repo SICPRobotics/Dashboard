@@ -13,7 +13,7 @@ export function useVisionStatus() {
 export function useRobotStatus() {
     const [status, setStatus] = useState<RobotStatus | null>(null);
 
-    useEffect(() => ntClient.onUpdate(setStatus));
+    useEffect(() => ntClient.onUpdate(() => setStatus(ntClient.getRobotStatus())));
 
     return status;
 }

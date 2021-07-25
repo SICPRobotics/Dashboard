@@ -16,7 +16,7 @@ export class SocketManager extends Listenable<VisionStatus | null> {
 
     start() {
         this.socket = new WebSocket(this.address);
-        this.socket.onerror = console.log;
+        //this.socket.onerror = console.log;
         this.socket.onmessage = (event) => {
             const status = JSON.parse(event.data).value;
 

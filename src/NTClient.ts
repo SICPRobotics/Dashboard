@@ -1,13 +1,18 @@
 import { Client } from "wpilib-nt-client";
 import { Listenable } from "./Listenable";
+import { RobotStatus } from "./Status";
 
 type NTValue = {
-    value: number | string
+    value: any
     type: string
 }
 
-interface NTStatus {
-    [key: string]: NTValue
+export interface NTStatus {
+    table: {
+        [key: string]: NTValue
+    }
+    connected: boolean
+    error?: string
 }
 
 export class NTClient extends Listenable<NTStatus> {
@@ -16,28 +21,72 @@ export class NTClient extends Listenable<NTStatus> {
     constructor (public uri = 'roborio-5822-frc.local') {
         super();
 
-        this.status = {};
+        this.status = {
+            table: {},
+            connected: false
+        };
 
         this.ntClient = new Client();
+        this.start();
         this.ntClient.setReconnectDelay(100);
-        this.ntClient.start((connected, err) => console.log({ connected, err }), uri);
-        this.ntClient.addListener((key, value, valueType, type) => this.update(key, value, valueType, type));
+        this.ntClient.addListener((key, value, valueType, type) => this.update(key, value, valueType as string, type));
+    }
+
+    connect() {
+        console.log('trying to connect...')
+        return new Promise<void>(resolve => {
+            this.ntClient.start((connected, err) => {
+                let error;
+                if (err) {
+                    error = `${err.name}: ${err.message}`;
+                    console.error(err);
+                }
+                this.setStatus({ ...this.status, connected, error });
+                resolve();
+            }, this.uri);
+        });
+    }
+
+    async start() {
+        if (!this.status.connected) {
+            await this.connect();
+        }
+
+        const time = this.status.connected ? 10000 : 1000;
+
+        setTimeout(() => this.start(), time);
     }
 
     update(key: string, value: any, valueType: string, type: string) {
-        const newStatus = { ...this.status };
+        const newTable = { ...this.status.table };
 
         //console.log({ key, value })
 
         if (type == 'delete') {
-            delete newStatus[key];
+            delete newTable[key];
         } else {
-            newStatus[key] = {
+            newTable[key] = {
                 value,
                 type: valueType
             }
         }
 
-        this.setStatus(newStatus);
+        this.setStatus({ ...this.status, table: newTable });
+    }
+
+    getRobotStatus(): RobotStatus | null {
+        if (!this.status.connected) {
+            return null;
+        }
+
+        return {
+            nt: this.status,
+            hood: {
+                position: this.status.table['/SmartDashboard/Hood Position']?.value as number
+            },
+            flywheel: {
+                spinning: this.status.table['/SmartDashboard/FlywheelSpinning']?.value as boolean
+            }
+        }
     }
 }

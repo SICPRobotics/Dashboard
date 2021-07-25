@@ -1,3 +1,5 @@
+import { NTStatus } from "./NTClient";
+
 export interface Point {
     x: number,
     y: number
@@ -17,5 +19,11 @@ export interface VisionStatus {
 }
 
 export interface RobotStatus {
-    
+    nt: NTStatus
+    hood: {
+        position?: number
+    }
+    flywheel: {
+        spinning?: boolean
+    }
 }
