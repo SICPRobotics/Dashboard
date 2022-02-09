@@ -4,8 +4,8 @@ import { row, theme } from "./styles";
 import { Tab } from "./Tab";
 import { Vision } from "./vision/Vision";
 
-type MenuTabs = ['vision', 'auto'];
-const tabs = ['vision', 'auto'];
+type MenuTabs = ['vision', 'auto', 'telemetry'];
+const tabs = ['vision', 'auto', 'telemetry'];
 
 export const Menu = () => {
     const [tab, setTab] = useState('vision');
