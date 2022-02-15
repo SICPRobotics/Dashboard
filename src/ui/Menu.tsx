@@ -3,6 +3,7 @@ import { Status } from "./status/Status";
 import { row, theme } from "./styles";
 import { Tab } from "./Tab";
 import { Vision } from "./vision/Vision";
+import { Telemetry } from "./telemetry/Telemetry";
 
 type MenuTabs = ['vision', 'auto', 'telemetry'];
 const tabs = ['vision', 'auto', 'telemetry'];
@@ -12,7 +13,8 @@ export const Menu = () => {
 
     const content = {
         main: <span>Main</span>,
-        vision: <Vision />
+        vision: <Vision />,
+        telemetry: <Telemetry />
     }[tab];
 
     return <div style={{
