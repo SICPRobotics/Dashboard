@@ -28,9 +28,14 @@ export const Telemetry = () => {
 
     return <div>
         <canvas ref={ref} width={320} height={240} style={{
-            backgroundColor: '#000000'
+            //backgroundColor: '#000000'
         }} />
-        { JSON.stringify(status, null, 4) }
+        <h1>
+            Right Motor Turns: {robotStatus?.driveTrain?.rightsideturn}
+        </h1>
+        <h1>
+        Left Motor Turns: {robotStatus?.driveTrain?.leftsideturn}
+        </h1>
         <h1>Hood: {robotStatus ? robotStatus : 'not connected'}</h1>
         <h1>Flywheel: <span style={{
             color: robotStatus?.flywheel?.spinning ? theme.darkGreen : theme.body

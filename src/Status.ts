@@ -20,6 +20,11 @@ export interface VisionStatus {
 
 export interface RobotStatus {
     nt: NTStatus
+    driveTrain: {
+        rightsideturn?: number
+        leftsideturn?: number
+        
+    }
     hood: {
         position?: number
     }

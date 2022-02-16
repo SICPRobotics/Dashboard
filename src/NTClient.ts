@@ -81,6 +81,10 @@ export class NTClient extends Listenable<NTStatus> {
 
         return {
             nt: this.status,
+            driveTrain:{
+                rightsideturn: this.status.table['/SmartDashboard/Right Motor Position']?.value as number,
+                leftsideturn: this.status.table['/SmartDashboard/Left Motor Position']?.value as number
+            },
             hood: {
                 position: this.status.table['/SmartDashboard/Hood Position']?.value as number
             },
