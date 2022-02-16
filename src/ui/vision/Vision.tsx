@@ -6,7 +6,7 @@ import { theme } from "../styles";
 export const Vision = () => {
     const status = useVisionStatus();
     const robotStatus = useRobotStatus();
-
+    let num = 0;
     const ref = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
@@ -60,6 +60,7 @@ export const Vision = () => {
     });
 
     useEffect(() => {
+        num = 1;
         ref.current!.addEventListener('mousedown', (e) => {
             const rect = (e.target! as HTMLCanvasElement).getBoundingClientRect();
             const x = e.clientX - rect.left;
@@ -78,7 +79,7 @@ export const Vision = () => {
         <h1>Flywheel: <span style={{
             color: robotStatus?.flywheel?.spinning ? theme.darkGreen : theme.body
         }}>
-            {robotStatus?.flywheel?.spinning ? 'SPINNING' : 'off'}
+            {robotStatus?.flywheel?.spinning ? 'SPINNING' : num}
         </span></h1>
     </div>
 }
