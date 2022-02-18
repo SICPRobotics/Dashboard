@@ -5,7 +5,7 @@ import { Tab } from "./Tab";
 import { Vision } from "./vision/Vision";
 import { Telemetry } from "./telemetry/Telemetry";
 
-type MenuTabs = ['vision', 'auto', 'telemetry'];
+//type MenuTabs = ['vision', 'auto', 'telemetry'];
 const tabs = ['vision', 'auto', 'telemetry'];
 
 export const Menu = () => {

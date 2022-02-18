@@ -1,13 +1,15 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useRobotStatus, useVisionStatus } from "../../hooks/useStatus"
 import { write } from "../../write";
 import { theme } from "../styles";
+import { MainTabs, TabbedMenu } from "../TabbedMenu";
 
 export const Telemetry = () => {
     const robotStatus = useRobotStatus();
     //let num = 0;
 
     const ref = useRef<HTMLCanvasElement>(null);
+    const [mechanism, changeMechanism] = useState('main');
 
     useEffect(() => {
         const canvas = ref.current!;
@@ -30,9 +32,18 @@ export const Telemetry = () => {
 
 
     return <div>
+        <TabbedMenu containedTabs={[{element: <div>test1</div>, name:'test1'},{element: <div>test2</div>, name:'test2'}]} startTab='test1' includeStatus={false}/>
+        
+        
+        
         <canvas ref={ref} width={320} height={240} style={{
             //backgroundColor: '#000000'
         }} />
+
+
+        <button onClick={() => changeMechanism(mechanism == 'main' ? 'spesific' : 'main')}>
+            {mechanism}
+        </button>
         <h1>
             Right Motor Turns: {robotStatus ? 1 : 'not connected'}
         </h1>

@@ -2,6 +2,7 @@ import { Menu } from './Menu';
 import React, { useState } from 'react'
 import { render } from 'react-dom'
 import { root } from './styles';
+import {MainTabs, TabbedMenu} from './TabbedMenu';
 
 const mainElement = document.createElement('div')
 mainElement.setAttribute('id', 'root')
@@ -13,7 +14,7 @@ mainElement.style.height = '100%';
 const App = () => {
     return (
         <div style={root}>
-            <Menu/>
+            <TabbedMenu containedTabs={MainTabs} startTab={'vision'} includeStatus={true}/>
         </div>
     )
 }
